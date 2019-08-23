@@ -1,10 +1,10 @@
-package com.example.android.gdgfinder.search
+package maxeem.america.gdg.search
 
 import android.location.Location
-import com.example.android.gdgfinder.network.GdgApiService
-import com.example.android.gdgfinder.network.GdgChapter
-import com.example.android.gdgfinder.network.GdgResponse
-import com.example.android.gdgfinder.network.LatLong
+import maxeem.america.gdg.network.GdgApiService
+import maxeem.america.gdg.network.GdgChapter
+import maxeem.america.gdg.network.GdgResponse
+import maxeem.america.gdg.network.LatLong
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

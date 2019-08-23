@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder
+package maxeem.america.gdg
 
 import org.junit.Test
 

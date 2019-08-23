@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder
+package maxeem.america.gdg
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.android.gdgfinder.databinding.ActivityMainBinding
+import maxeem.america.gdg.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

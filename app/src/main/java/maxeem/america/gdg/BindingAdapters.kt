@@ -1,10 +1,10 @@
-package com.example.android.gdgfinder
+package maxeem.america.gdg
 
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.gdgfinder.network.GdgChapter
-import com.example.android.gdgfinder.search.GdgListAdapter
+import maxeem.america.gdg.network.GdgChapter
+import maxeem.america.gdg.search.GdgListAdapter
 
 /**
  * When there is no Mars property data (data is null), hide the [RecyclerView], otherwise show it.

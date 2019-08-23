@@ -3,19 +3,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/layout">
+        android:id="@+id/layout"
+        tools:context="maxeem.america.gdg.gdglist.GdgListFragment">
     <data>
         <variable
                 name="chapter"
-                type="com.example.android.gdgfinder.network.GdgChapter"/>
+                type="maxeem.america.gdg.network.GdgChapter"/>
         <variable
                 name="clickListener"
-                type="com.example.android.gdgfinder.search.GdgClickListener"/>
+                type="maxeem.america.gdg.search.GdgClickListener"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="com.example.android.gdg.gdglist.GdgListFragment"
             android:onClick="@{() -> clickListener.onClick(chapter)}">
 
         <ImageView

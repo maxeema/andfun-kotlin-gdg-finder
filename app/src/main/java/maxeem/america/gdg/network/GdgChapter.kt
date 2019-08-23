@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder.network
+package maxeem.america.gdg.network
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

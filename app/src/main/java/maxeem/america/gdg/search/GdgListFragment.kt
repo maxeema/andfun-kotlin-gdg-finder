@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder.search
+package maxeem.america.gdg.search
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.android.gdgfinder.databinding.FragmentGdgListBinding
+import maxeem.america.gdg.databinding.FragmentGdgListBinding
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 

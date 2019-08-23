@@ -17,19 +17,18 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-    dataBinding {
-        enabled = true
-    }
+    compileSdkVersion 29
     defaultConfig {
-        applicationId "com.example.android.gdgfinder"
+        multiDexEnabled true
+        resConfigs "en"
+        applicationId "maxeem.america.gdg"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,56 +40,49 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
     androidExtensions {
         experimental = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildToolsVersion = '29.0.2'
 }
 
 dependencies {
+//    kapt "androidx.room:room-compiler:2.1.0"
+    kapt "com.github.bumptech.glide:compiler:4.9.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
-
-    // Constraint Layout
-    implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
-
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
-    // Use viewModelScope from lifecycle-viewmodel-ktx
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha03"
-
-    // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
-
-    // Core with Ktx
-    implementation "androidx.core:core-ktx:$version_core"
-
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
-
-    // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
-
-    // Retrofit Coroutines Support
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$version_glide"
-
-    // RecyclerView
-    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
-
-    // Material design components
-    implementation "com.google.android.material:material:$version_material"
-
-    // Client for retrieving location
-    implementation "com.google.android.gms:play-services-location:$version_play_services"
+    implementation 'android.arch.work:work-runtime-ktx:1.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha03'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha03'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-alpha01'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.2.0-alpha01'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-alpha01'
+//    implementation "androidx.room:room-runtime:2.1.0"
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+    implementation "com.google.android.material:material:1.1.0-alpha09"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    implementation "com.squareup.moshi:moshi:1.8.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.6.1'
+    implementation "org.jetbrains.anko:anko-commons:0.10.8"
+    implementation "org.jetbrains.anko:anko-design:0.10.8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+    // Testing dependencies
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

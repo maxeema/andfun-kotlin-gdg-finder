@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder.network
+package maxeem.america.gdg.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi

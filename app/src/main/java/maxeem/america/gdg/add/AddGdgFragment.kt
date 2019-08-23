@@ -1,4 +1,4 @@
-package com.example.android.gdgfinder.add
+package maxeem.america.gdg.add
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
-import com.example.android.gdgfinder.R
-import com.example.android.gdgfinder.databinding.AddGdgFragmentBinding
+import maxeem.america.gdg.R
+import maxeem.america.gdg.databinding.AddGdgFragmentBinding
 import com.google.android.material.snackbar.Snackbar
 
 class AddGdgFragment : Fragment() {

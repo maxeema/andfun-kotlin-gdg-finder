@@ -1,9 +1,9 @@
-package com.example.android.gdgfinder.search
+package maxeem.america.gdg.search
 
 import android.location.Location
 import androidx.lifecycle.*
-import com.example.android.gdgfinder.network.GdgApi
-import com.example.android.gdgfinder.network.GdgChapter
+import maxeem.america.gdg.network.GdgApi
+import maxeem.america.gdg.network.GdgChapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
