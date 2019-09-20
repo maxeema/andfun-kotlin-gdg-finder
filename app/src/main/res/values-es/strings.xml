@@ -18,6 +18,7 @@
     </string>
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
     <string name="app_name">GDG</string>
+    <string name="app_title">@string/app_name</string>
     <string name="stage_image_description">Foto desde el escenario de un devfest.</string>
     <string name="submit_button_description">Botón para enviar formulario</string>
     <string name="form_name_description">introduzca su nombre</string>
@@ -31,4 +32,5 @@
     <string name="submitted">Enviado, no hay necesidad de enviar de nuevo.</string>
     <string name="done">Hecho</string>
     <string name="submit">Enviar</string>
+    <string name="okay">OK</string>
 </resources>

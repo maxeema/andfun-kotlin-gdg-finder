@@ -1,11 +1,73 @@
-<resources>
 
-    <!-- Base application theme. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+
+        <item name="textAppearanceHeadline1">@style/MyTextAppearanceHeadline1</item>
+        <item name="textAppearanceHeadline2">@style/MyTextAppearanceHeadline2</item>
+        <item name="textAppearanceHeadline3">@style/MyTextAppearanceHeadline3</item>
+        <item name="textAppearanceHeadline4">@style/MyTextAppearanceHeadline4</item>
+        <item name="textAppearanceHeadline5">@style/MyTextAppearanceHeadline5</item>
+        <item name="textAppearanceHeadline6">@style/MyTextAppearanceHeadline6</item>
+        <item name="textAppearanceSubtitle1">@style/MyTextAppearanceSubtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/MyTextAppearanceSubtitle2</item>
+        <item name="textAppearanceBody1">@style/MyTextAppearanceBody1</item>
+        <item name="textAppearanceBody2">@style/MyTextAppearanceBody2</item>
+        <item name="textAppearanceButton">@style/MyTextAppearanceButton</item>
+        <item name="textAppearanceCaption">@style/MyTextAppearanceCaption</item>
+        <item name="textAppearanceOverline">@style/MyTextAppearanceOverline</item>
+    </style>
+
+    <style name="Expressive">
+        <item name="fontFamily">@font/lobster</item>
+    </style>
+
+    <style name="MyTextAppearanceHeadline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="fontFamily">@font/work_sans_extralight</item>
+    </style>
+    <style name="MyTextAppearanceHeadline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+    </style>
+    <style name="MyTextAppearanceHeadline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceHeadline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceHeadline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/work_sans_bold</item>
+    </style>
+    <style name="MyTextAppearanceHeadline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+    </style>
+    <style name="MyTextAppearanceSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+    </style>
+    <style name="MyTextAppearanceBody1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceBody2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+    </style>
+    <style name="MyTextAppearanceCaption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/work_sans</item>
+    </style>
+    <style name="MyTextAppearanceOverline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="fontFamily">@font/work_sans_semibold</item>
     </style>
 
 </resources>

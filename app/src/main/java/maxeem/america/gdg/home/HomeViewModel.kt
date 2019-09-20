@@ -1,19 +1,20 @@
 package maxeem.america.gdg.home
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import maxeem.america.util.asImmutable
+import maxeem.america.util.asMutable
 
 class HomeViewModel : ViewModel() {
-    private val _navigateToSearch = MutableLiveData<Boolean>()
-    val navigateToSearch: LiveData<Boolean>
-        get() = _navigateToSearch
+
+    val navigateToSearch = MutableLiveData<Boolean>().asImmutable()
 
     fun onFabClicked() {
-        _navigateToSearch.value = true
+        navigateToSearch.asMutable().value = true
     }
 
-    fun onNavigatedToSearch() {
-        _navigateToSearch.value = false
+    fun consumeNavigateToSearch() {
+        navigateToSearch.asMutable().value = false
     }
+
 }

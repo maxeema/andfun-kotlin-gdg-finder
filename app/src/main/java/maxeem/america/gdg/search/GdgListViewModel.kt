@@ -1,16 +1,21 @@
 package maxeem.america.gdg.search
 
 import android.location.Location
-import androidx.lifecycle.*
-import maxeem.america.gdg.network.GdgApi
-import maxeem.america.gdg.network.GdgChapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import maxeem.america.gdg.network.GdgApi
+import maxeem.america.gdg.network.GdgChapter
+import maxeem.america.util.thread
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import java.io.IOException
 
-
-class GdgListViewModel: ViewModel() {
+class GdgListViewModel: ViewModel(), AnkoLogger {
 
     private val repository = GdgChapterRepository(GdgApi.retrofitService)
 
@@ -43,8 +48,10 @@ class GdgListViewModel: ViewModel() {
     }
 
     private fun onQueryChanged() {
+        info("onQueryChanged(), currentJob: $currentJob")
         currentJob?.cancel() // if a previous query is running cancel it before starting another
         currentJob = viewModelScope.launch {
+            info("$thread job launch, start: $this")
             try {
                 // this will run on a thread managed by Retrofit
                 _gdgList.value = repository.getChaptersForFilter(filter.currentValue)
@@ -56,6 +63,13 @@ class GdgListViewModel: ViewModel() {
                 }
             } catch (e: IOException) {
                 _gdgList.value = listOf()
+            }
+            info("$thread job launch, end: $this")
+        }.apply {
+            invokeOnCompletion {
+            info("$thread invokeOnCompletion: ${currentJob==this}")
+                if (currentJob == this)
+                    currentJob = null
             }
         }
     }

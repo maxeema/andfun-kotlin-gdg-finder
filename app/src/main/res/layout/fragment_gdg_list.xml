@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-    tools:context="maxeem.america.gdg.search.GdgListFragment">
+        tools:context="maxeem.america.gdg.search.GdgListFragment">
 
     <data>
-
-        <variable
-                name="viewModel"
-                type="maxeem.america.gdg.search.GdgListViewModel" />
+        <variable name="viewModel" type="maxeem.america.gdg.search.GdgListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/list_item"
-                app:listData="@{viewModel.gdgList}"
+                listData="@{viewModel.gdgList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 

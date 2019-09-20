@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/layout"
         tools:context="maxeem.america.gdg.gdglist.GdgListFragment">
+
     <data>
         <variable
                 name="chapter"
@@ -13,6 +14,7 @@
                 name="clickListener"
                 type="maxeem.america.gdg.search.GdgClickListener"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,9 +27,8 @@
                 app:srcCompat="@drawable/ic_gdg"
                 android:layout_marginBottom="26dp"
                 android:layout_marginTop="26dp"
-                android:layout_marginLeft="16dp"
-                android:contentDescription="TODO"
-                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -35,8 +36,8 @@
                 android:id="@+id/chapter_name"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
                 android:text="@{chapter.name}"
                 app:layout_constraintStart_toEndOf="@+id/gdg_image"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,5 +47,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toBottomOf="@+id/gdg_image"
                 app:layout_constraintTop_toTopOf="@+id/gdg_image"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

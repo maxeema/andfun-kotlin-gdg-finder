@@ -8,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import maxeem.america.gdg.databinding.FragmentGdgListBinding
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
+import maxeem.america.gdg.databinding.FragmentGdgListBinding
+import maxeem.america.base.BaseFragment
 
 private const val LOCATION_PERMISSION_REQUEST = 1
 
 private const val LOCATION_PERMISSION = "android.permission.ACCESS_FINE_LOCATION"
 
-class GdgListFragment : Fragment() {
+class GdgListFragment : BaseFragment() {
 
 
     private val viewModel: GdgListViewModel by lazy {
