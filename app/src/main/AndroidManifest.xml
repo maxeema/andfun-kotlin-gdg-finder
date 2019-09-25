@@ -4,9 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- To access the location we need to ask for permission -->
     <!-- see https://developer.android.com/training/location/retrieve-current.html -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- skip Play Store filtering on devices have no the hardware feature -->
+    <uses-feature android:name="android.hardware.location" android:required="false" />
 
     <application
             android:allowBackup="true"
