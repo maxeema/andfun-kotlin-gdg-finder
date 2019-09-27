@@ -24,6 +24,11 @@ import androidx.databinding.BindingAdapter
 import maxeem.america.gdg.R
 import org.jetbrains.anko.design.longSnackbar
 
+@BindingAdapter("goneIf")
+fun View.goneIf(condition: Boolean?) {
+    visibility = if (condition == true) View.GONE else View.VISIBLE
+}
+
 @BindingAdapter("visibleOn")
 fun View.visibleOn(condition: Boolean?) {
     visibility = if (condition == true) View.VISIBLE else View.INVISIBLE
@@ -34,8 +39,8 @@ fun TextView.textHtml(str: String) {
     text = str.fromHtml()
 }
 
-@BindingAdapter("tooltipCompat")
-fun View.tooltipCompat(str: String) {
+@BindingAdapter("tooltip")
+fun View.tooltip(str: CharSequence?) {
     TooltipCompat.setTooltipText(this, str)
 }
 

@@ -2,19 +2,16 @@ package maxeem.america.gdg.misc
 
 import android.view.View
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
-import maxeem.america.gdg.network.GdgChapter
-import maxeem.america.gdg.search.GdgListAdapter
 
-@BindingAdapter("listData")
-fun RecyclerView.listData(data: List<GdgChapter>?) {
-    (adapter as GdgListAdapter).submitList(data) {
-        scrollToPosition(0)
+@BindingAdapter("showOnlyWhenNotEmpty")
+fun View.showOnlyWhenNotEmpty(data: List<Any>?) {
+    visibility = when {
+        data.isNullOrEmpty() -> View.GONE
+        else -> View.VISIBLE
     }
 }
-
 @BindingAdapter("showOnlyWhenEmpty")
-fun View.showOnlyWhenEmpty(data: List<GdgChapter>?) {
+fun View.showOnlyWhenEmpty(data: List<Any>?) {
     visibility = when {
         data.isNullOrEmpty() -> View.VISIBLE
         else -> View.GONE

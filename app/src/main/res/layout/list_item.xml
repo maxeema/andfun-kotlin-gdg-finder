@@ -3,50 +3,58 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/layout"
-        tools:context="maxeem.america.gdg.gdglist.GdgListFragment">
+        tools:context=".ui.GdgListFragment">
 
     <data>
-        <variable
-                name="chapter"
-                type="maxeem.america.gdg.network.GdgChapter"/>
-        <variable
-                name="clickListener"
-                type="maxeem.america.gdg.search.GdgClickListener"/>
+        <variable name="chapter"  type="maxeem.america.gdg.network.GdgChapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/gdg_image"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:paddingTop="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_gdg" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chapter_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:text="@{ chapter.name }"
+            android:textAppearance="?textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="@+id/gdg_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gdg_image"
+            app:layout_constraintTop_toTopOf="@+id/gdg_image"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="GDG Mountain View\nI like Google" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/country"
+            tools:text="USA"
+            android:text="@{ chapter.country }"
+            android:alpha=".4"
+            android:textAppearance="?textAppearanceOverline"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.onClick(chapter)}">
-
-        <ImageView
-                android:id="@+id/gdg_image"
-                android:layout_width="50dp"
-                android:layout_height="76dp"
-                app:srcCompat="@drawable/ic_gdg"
-                android:layout_marginBottom="26dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginStart="@dimen/spacing_normal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-                android:id="@+id/chapter_name"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:text="@{chapter.name}"
-                app:layout_constraintStart_toEndOf="@+id/gdg_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="GDG Mountain View is really long so it will wrap in tools"
-                android:textAppearance="?textAppearanceHeadline6"
-                android:gravity="center_vertical"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintBottom_toBottomOf="@+id/gdg_image"
-                app:layout_constraintTop_toTopOf="@+id/gdg_image"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/chapter_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

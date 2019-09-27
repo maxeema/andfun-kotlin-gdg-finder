@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ui.AddGdgFragment">
+
+    <data>
+        <variable name="viewModel" type="maxeem.america.gdg.viewmodels.AddGdgViewModel"/>
+        <variable name="hasSent" type="androidx.databinding.ObservableBoolean"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:background="@color/windowBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navigationIcon="?homeAsUpIndicator"
+                    app:title="@string/gdg_apply" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewIntro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:contentDescription="@string/add_gdg"
+                    android:text="@string/add_gdg"
+                    android:textAppearance="?textAppearanceSubtitle1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextNameLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:hint="@string/your_name_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewIntro">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="25"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextEmailLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/email_label"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextNameLayout"
+                    app:layout_constraintStart_toStartOf="@+id/editTextNameLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="45"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextCityLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/city_label"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextEmailLayout"
+                    app:layout_constraintStart_toStartOf="@+id/editTextEmailLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextEmailLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="25"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextCountryLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/country_label"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextCityLayout"
+                    app:layout_constraintStart_toStartOf="@+id/editTextCityLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextCityLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="25"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editTextRegionLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/region_label"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextCountryLayout"
+                    app:layout_constraintStart_toStartOf="@+id/editTextCountryLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextCountryLayout">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/editTextRegion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="1"
+                        android:inputType="textPostalAddress"
+                        android:maxLength="25"
+                        android:singleLine="true"
+                        android:theme="@style/ThemeOverlay.MaterialComponents.AutoCompleteTextView.OutlinedBox.Dense" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/whyContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextRegionLayout"
+                    app:layout_constraintStart_toStartOf="@+id/editTextRegionLayout"
+                    app:layout_constraintTop_toBottomOf="@id/editTextRegionLayout">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/labelTextWhy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:contentDescription="@string/motivation"
+                        android:text="@string/motivation"
+                        android:textAppearance="?textAppearanceSubtitle2" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/editTextWhyLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/enter_motivation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextCountryLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextWhy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:lines="2"
+                            android:maxLength="100" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submitBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:accessibilityLiveRegion="polite"
+                    android:contentDescription="@string/submit_button_description"
+                    android:onClick="@{() -> viewModel.onSubmitEvent()}"
+                    android:text="@string/submit"
+                    app:layout_constraintEnd_toEndOf="@id/whyContent"
+                    app:layout_constraintTop_toBottomOf="@+id/whyContent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    visibleOn="@{ hasSent }"
+                    android:id="@+id/thanks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/thank_you"
+                    android:textAppearance="@style/MyTextAppearanceOverline"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/submitBtn"
+                    app:layout_constraintTop_toTopOf="@+id/submitBtn"
+                    app:layout_constraintBottom_toBottomOf="@+id/submitBtn" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/be_aware"
+                    visibleOn="@{ !hasSent }"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/demo_be_aware"
+                    android:textAppearance="@style/MyTextAppearanceOverline"
+                    android:textColor="?colorSecondary"
+                    app:layout_constraintBottom_toBottomOf="@+id/submitBtn"
+                    app:layout_constraintEnd_toStartOf="@+id/submitBtn"
+                    app:layout_constraintStart_toStartOf="@+id/whyContent"
+                    app:layout_constraintTop_toTopOf="@+id/submitBtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

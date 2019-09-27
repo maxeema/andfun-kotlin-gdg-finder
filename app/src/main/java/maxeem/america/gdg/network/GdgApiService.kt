@@ -4,28 +4,28 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import maxeem.america.gdg.misc.Conf
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-
-private const val BASE_URL = "https://developers.google.com/community/gdg/directory/"
 interface GdgApiService {
-    @GET("directory.json")
-    fun getChapters():
-    // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
-            Deferred<GdgResponse>
-}
-private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
 
-private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl(BASE_URL)
-        .build()
+    @GET(Conf.GDG.GET_DIRECTORY)
+    fun getChaptersAsync(): Deferred<GdgResponse>
+
+}
+
+private val retrofit = Retrofit.Builder().apply {
+    baseUrl(Conf.GDG.API_BASE_URL)
+    addCallAdapterFactory(CoroutineCallAdapterFactory())
+    addConverterFactory(
+        MoshiConverterFactory.create(Moshi.Builder().add(KotlinJsonAdapterFactory()).build())
+    )
+}.build()
 
 object GdgApi {
+
     val retrofitService : GdgApiService by lazy { retrofit.create(GdgApiService::class.java) }
+
 }

@@ -3,57 +3,159 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="maxeem.america.gdg.search.GdgListFragment">
+        tools:context=".ui.GdgListFragment">
 
     <data>
-        <variable name="viewModel" type="maxeem.america.gdg.search.GdgListViewModel" />
+        <variable name="viewModel" type="maxeem.america.gdg.viewmodels.GdgListViewModel" />
+        <import type="maxeem.america.gdg.misc.ApiStatus" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:background="@color/windowBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            app:liftOnScroll="true"
+            style="@style/Widget.MaterialComponents.AppBarLayout.Surface"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-        <HorizontalScrollView
-                android:id="@+id/chips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                app:titleTextColor="?colorPrimary"
+                app:subtitleTextColor="?colorPrimary"
+                app:navigationIcon="?homeAsUpIndicator"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="@string/gdg_search"
+                app:menu="@menu/listing_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        </HorizontalScrollView>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/gdg_chapter_list"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/chips"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:listitem="@layout/list_item"
-                listData="@{viewModel.gdgList}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            visibleOn="@{ viewModel.hasData }"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadingEdgeLength="40dp"
+            android:requiresFadingEdge="vertical"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/list_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="12"/>
 
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:visibleOn="@{ viewModel.status instanceof ApiStatus.Loading }"
+            android:layout_gravity="center" />
 
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/waiting_for_location_and_network"
+        <RelativeLayout
+            visibleOn="@{ !viewModel.hasData &amp;&amp; viewModel.status instanceof ApiStatus.Error}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/error"
+                android:onClick="@{ ()-> viewModel.retryOnError() }"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@{viewModel.status instanceof ApiStatus.ConnectionError ? @drawable/ic_connection_error : @drawable/ic_broken_image}"
+                tools:src="@drawable/ic_connection_error" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/error"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="20dp"
+                android:textAppearance="?textAppearanceSubtitle2"
+                android:textColor="?android:textColorTertiary"
+                android:text="@{ viewModel.status instanceof ApiStatus.ConnectionError ? @string/no_connection_tap : @string/some_error_tap }"
+                android:textAlignment="center"
+                app:layout_anchor="@id/error"
+                app:layout_anchorGravity="bottom|center_horizontal"
+                tools:text="@string/no_connection_tap" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/empty"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:layout_gravity="center_vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="8dp"
+                android:textAppearance="?textAppearanceSubtitle2"
+                android:textColor="?android:textColorTertiary"
+                android:text="@string/empty_gdg_search"
                 android:gravity="center"
-                android:textStyle="bold"
-                app:showOnlyWhenEmpty="@{viewModel.gdgList}"
-                tools:visibility="gone"
-        />
+                android:layout_gravity="center" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:onClick="@{ ()-> viewModel.onApply() }"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/info"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/apply"
+                app:icon="@drawable/ic_create"/>
+
+        </RelativeLayout>
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_appbar"
+            visibleOn="@{ viewModel.hasRegions }"
+            tools:visibility="visible"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            app:layout_insetEdge="bottom"
+            app:layout_anchor="@id/recycler"
+            app:layout_anchorGravity="bottom"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <HorizontalScrollView
+                android:id="@+id/regionsScroll"
+                android:fadingEdgeLength="40dp"
+                android:requiresFadingEdge="horizontal"
+                android:scrollbarStyle="insideOverlay"
+                android:scrollbars="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/regions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true"/>
+
+            </HorizontalScrollView>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

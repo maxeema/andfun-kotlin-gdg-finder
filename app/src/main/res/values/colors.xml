@@ -2,13 +2,21 @@
 
 <resources>
 
-    <color name="primaryColor">#0288d1</color>
-    <color name="primaryLightColor">#5eb8ff</color>
-    <color name="primaryDarkColor">#005b9f</color>
-    <color name="primaryTextColor">#000000</color>
+    <color name="windowBackground">#ffffff</color>
+
+    <color name="primaryColor">@color/googleBlue</color>
+    <color name="primaryLightColor">@color/googleDarkBlue</color>
+    <color name="primaryDarkColor">#121212</color>
+    <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryColor">#d81b60</color>
     <color name="secondaryLightColor">#ff5c8d</color>
     <color name="secondaryDarkColor">#a00037</color>
     <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="titleScrim">#55000000</color>
+
+    <color name="aboutColor1">@color/googleBlue</color>
+    <color name="aboutColor2">@color/googleGreen</color>
+    <color name="listItemsDecorationLine">#cfcfcf</color>
 
 </resources>

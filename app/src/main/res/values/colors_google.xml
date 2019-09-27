@@ -1,0 +1,11 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+
+<resources>
+
+    <color name="googleRed">#DB4437</color>
+    <color name="googleGreen">#0F9D58</color>
+    <color name="googleBlue">#4285F4</color>
+    <color name="googleYellow">#FFC107</color>
+    <color name="googleDarkBlue">#1A237E</color>
+
+</resources>

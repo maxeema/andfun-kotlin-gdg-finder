@@ -6,6 +6,7 @@ import maxeem.america.app
 
 object Utils {
 
+    @JvmStatic
     fun fromHtml(s: String) = HtmlCompat.fromHtml(s, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
     fun formatError(msgId: Int, err: Throwable) = formatError(msgId.asString(), err)
@@ -18,3 +19,4 @@ object Utils {
     fun formatDateTime(millis: Long) = formatDateTime(app, millis, FORMAT_SHOW_DATE or FORMAT_SHOW_TIME or FORMAT_ABBREV_ALL)
 
 }
+

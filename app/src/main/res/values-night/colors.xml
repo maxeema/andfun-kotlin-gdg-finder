@@ -1,0 +1,11 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+
+<resources>
+
+    <color name="windowBackground">#121212</color>
+
+    <color name="aboutColor1">@color/googleYellow</color>
+    <color name="aboutColor2">@color/googleRed</color>
+    <color name="listItemsDecorationLine">#3f3f3f</color>
+
+</resources>

@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- see https://developer.android.com/training/location/retrieve-current.html -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- skip Play Store filtering on devices have no the hardware feature -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- skip Play Store filtering on devices without the hardware feature -->
     <uses-feature android:name="android.hardware.location" android:required="false" />
 
     <application
