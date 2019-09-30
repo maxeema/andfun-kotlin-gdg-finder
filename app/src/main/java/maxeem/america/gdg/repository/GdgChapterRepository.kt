@@ -2,6 +2,7 @@ package maxeem.america.gdg.repository
 
 import android.location.Location
 import kotlinx.coroutines.*
+import maxeem.america.app
 import maxeem.america.gdg.network.GdgApiService
 import maxeem.america.gdg.network.GdgChapter
 import maxeem.america.gdg.network.GdgResponse
@@ -17,8 +18,6 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
     companion object {
         private var cachedGdgResponse : GdgResponse? = null
         fun hasCache() = cachedGdgResponse != null
-        //
-        private val apiScope by lazy { CoroutineScope(Dispatchers.IO) }
     }
 
     @Volatile
@@ -26,10 +25,11 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
 
     private var repoJobInfo = RepoJobInfo(null, null)
 
-
     private suspend fun ensureJob(location: LatLong?) : RepoJobInfo {
-        if (repoJobInfo.job != null && repoJobInfo.location != location)
-            repoJobInfo.clear()
+        val job = repoJobInfo.job
+        info("ensureJob, ${job?.isCancelled}, ${repoJobInfo.location}, $job")
+        if (job != null && (job.isCompleted || repoJobInfo.location != location))
+            repoJobInfo.reset()
         if (repoJobInfo.isEmpty())
             repoJobInfo = startJobAsync(location)
         return repoJobInfo
@@ -46,8 +46,9 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
     private suspend fun startJobAsync(location: LatLong? = null) = coroutineScope {
         info("startDataJobAsync, location: $location, apiServiceJob: $apiServiceJob")
         async {
-            info("startDataJobAsync, location: $location")
+            info("- startDataJobAsync, $this")
             val gdgResponse = queryRepository()
+            info("- startDataJobAsync, got response, prepare data")
             withContext(Dispatchers.Default) {
                 GdgData.from(gdgResponse, location)
             }
@@ -75,7 +76,7 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
                 info(" - apiJob: !isComplete, await()")
                 gdgResponse = apiJob.await()
             } else {
-                info(" - apiJob: make new request, on $thread")
+                info(" - apiJob: make new request, on $thread}")
                 gdgResponse = performApiQueryAsync().await()
             }
         }
@@ -83,11 +84,13 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
     }
 
     private fun performApiQueryAsync() =
-        apiScope.async {
+        GlobalScope.async {
             info(" - performRepoQuery, on $thread")
             apiServiceJob = this as Deferred<GdgResponse>
+            info(" - apiServiceJob set to: $apiServiceJob")
             gdgApiService.getChaptersAsync().apply {
                 apiServiceJob = this
+                info(" - apiServiceJob re-set to: $apiServiceJob")
             }.await().apply {
                 cachedGdgResponse = this
                 info(" - j: awaited successfully, clear ref, response: $this")
@@ -124,8 +127,11 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
 
         fun isEmpty() = job == null
 
-        fun clear() {
-            job?.cancel()
+        fun reset() {
+            job?.takeUnless { it.isCompleted }?.also {
+                app.info("cancel() $it")
+                it.cancel()
+            }
             job = null
             location = null
         }
