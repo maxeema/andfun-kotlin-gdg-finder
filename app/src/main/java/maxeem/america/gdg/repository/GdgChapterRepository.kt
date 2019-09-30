@@ -17,6 +17,8 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
     companion object {
         private var cachedGdgResponse : GdgResponse? = null
         fun hasCache() = cachedGdgResponse != null
+        //
+        private val apiScope by lazy { CoroutineScope(Dispatchers.IO) }
     }
 
     @Volatile
@@ -63,31 +65,35 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
     private suspend fun queryRepository() : GdgResponse {
         val gdgResponse : GdgResponse
         info(" - cachedGdgResponse: $cachedGdgResponse")
-        info(" - apiServiceJob, $apiServiceJob")
+        val apiJob = apiServiceJob
+        info(" - apiServiceJob, $apiJob")
         if (cachedGdgResponse != null) {
             gdgResponse = cachedGdgResponse!!
         } else {
-            val j = apiServiceJob
-            info(" - j: $j")
-            if (j != null && !j.isCompleted) {
-                info(" - j: !isComplete, await()")
-                gdgResponse = withContext(Dispatchers.IO) { j.await() }
+            info(" - apiJob (apiServiceJob): $apiJob")
+            if (apiJob != null && !apiJob.isCompleted) {
+                info(" - apiJob: !isComplete, await()")
+                gdgResponse = apiJob.await()
             } else {
-                info(" - j: make new request, on $thread")
-                gdgResponse = CoroutineScope(Dispatchers.IO).async {
-                    apiServiceJob = this as Deferred<GdgResponse>
-                    gdgApiService.getChaptersAsync().apply {
-                        apiServiceJob = this
-                    }.await().apply {
-                        cachedGdgResponse = this
-                        info(" - j: await success, clear ref")
-                        apiServiceJob = null
-                    }
-                }.await()
+                info(" - apiJob: make new request, on $thread")
+                gdgResponse = performApiQueryAsync().await()
             }
         }
         return gdgResponse
     }
+
+    private fun performApiQueryAsync() =
+        apiScope.async {
+            info(" - performRepoQuery, on $thread")
+            apiServiceJob = this as Deferred<GdgResponse>
+            gdgApiService.getChaptersAsync().apply {
+                apiServiceJob = this
+            }.await().apply {
+                cachedGdgResponse = this
+                info(" - j: awaited successfully, clear ref, response: $this")
+                apiServiceJob = null
+            }
+        }
 
     private class GdgData private constructor(
         val regions: List<String>,
