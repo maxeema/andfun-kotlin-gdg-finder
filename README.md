@@ -10,10 +10,9 @@ GDG Finder helps you locate GDGs around the world or start one of your own. You'
 
  
 ## Screenshots
-
-![Screenshot1](screenshots/gdg-finder-home.png)
-![Screenshot2](screenshots/gdg-finder-search.png)
-![Screenshot3](screenshots/gdg-finder-apply.png)
+![Screenshot1](screenshots/screen1_day.png) ![Screenshot2](screenshots/screen2_night.png)
+![Screenshot3](screenshots/screen3_night.png) ![Screenshot4](screenshots/screen4_day.png)
+![Screenshot5](screenshots/screen0_night.png)
 
 ## How to use this repo while taking the course
 
