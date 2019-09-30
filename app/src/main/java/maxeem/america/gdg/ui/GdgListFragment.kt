@@ -15,12 +15,11 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateViewModelFactory
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
 import maxeem.america.app
 import maxeem.america.base.BaseFragment
 import maxeem.america.gdg.R
@@ -46,13 +45,6 @@ class GdgListFragment : BaseFragment() {
         model.onLocationUpdated(it)
     }}
 
-    private val scope = MainScope()
-
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.cancel()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?)
         = FragmentGdgListBinding.inflate(inflater).apply {
@@ -65,7 +57,7 @@ class GdgListFragment : BaseFragment() {
         val adapter = GdgListAdapter { v->
             startActivity(Intent(Intent.ACTION_VIEW, (v.tag as GdgChapter).website.toUri()))
         }.apply {
-            setFilterable(scope) {
+            setFilterable(viewLifecycleOwner.lifecycleScope) {
                 empty.visibleOn(it.isEmpty())
             }
             recycler.adapter = this
