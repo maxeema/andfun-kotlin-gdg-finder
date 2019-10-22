@@ -10,15 +10,17 @@ import maxeem.america.gdg.network.LatLong
 import maxeem.america.util.thread
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogger {
-
-    class Data(val chapters: List<GdgChapter>, val regions: List<String>)
+class GdgRepositoryImpl : GdgRepository, AnkoLogger, KoinComponent {
 
     companion object {
         private var cachedGdgResponse : GdgResponse? = null
         fun hasCache() = cachedGdgResponse != null
     }
+
+    private val gdgApiService: GdgApiService by inject();
 
     @Volatile
     private var apiServiceJob : Deferred<GdgResponse>? = null
@@ -35,12 +37,15 @@ class GdgChapterRepository(private val gdgApiService: GdgApiService) : AnkoLogge
         return repoJobInfo
     }
 
+    override
     suspend fun getData(region: String?, location: LatLong?)
         = ensureJob(location).await().run {
-            Data(when (region) {
+        GdgData(
+            when (region) {
                 null -> chapters
                 else -> chaptersByRegion.getValue(region)
-            }, regions)
+            }, regions
+        )
     }
 
     private suspend fun startJobAsync(location: LatLong? = null) = coroutineScope {

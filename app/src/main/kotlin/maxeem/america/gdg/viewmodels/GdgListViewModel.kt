@@ -6,20 +6,22 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import maxeem.america.gdg.misc.ApiStatus
-import maxeem.america.gdg.network.GdgApi
 import maxeem.america.gdg.network.GdgChapter
 import maxeem.america.gdg.network.LatLong
-import maxeem.america.gdg.repository.GdgChapterRepository
+import maxeem.america.gdg.repository.GdgData
+import maxeem.america.gdg.repository.GdgRepository
 import maxeem.america.util.asImmutable
 import maxeem.america.util.asMutable
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 @ExperimentalTime
-class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger {
+class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinComponent {
 
     private companion object {
         var cachedLocation : LatLong? = null
@@ -30,7 +32,7 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger {
         const val STATE_KEY_REGION   = "region"
     }
 
-    private val repository by lazy { GdgChapterRepository(GdgApi.retrofitService) }
+    private val repository : GdgRepository by inject()
     private var job: Job? = null
 
     private
@@ -57,13 +59,13 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger {
     }
 
     private fun performJob() {
-        info("performJob(), hasCache: ${GdgChapterRepository.hasCache()}, lastLocation: ${location.value}, currentJob: $job")
+        info("performJob(), lastLocation: ${location.value}, currentJob: $job")
         status.asMutable().value = ApiStatus.Loading
         job?.cancel()
         job = viewModelScope.launch {
             this as Job
             info(" - performJob, launch job: $this")
-            val r : Result<GdgChapterRepository.Data>
+            val r : Result<GdgData>
             measureTime {
                 r = runCatching {
                     repository.getData(region.value, location.value)
