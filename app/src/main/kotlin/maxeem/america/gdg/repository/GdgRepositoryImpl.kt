@@ -20,7 +20,7 @@ class GdgRepositoryImpl : GdgRepository, AnkoLogger, KoinComponent {
         fun hasCache() = cachedGdgResponse != null
     }
 
-    private val gdgApiService: GdgApiService by inject();
+    private val gdgApiService: GdgApiService by inject()
 
     @Volatile
     private var apiServiceJob : Deferred<GdgResponse>? = null
@@ -69,23 +69,19 @@ class GdgRepositoryImpl : GdgRepository, AnkoLogger, KoinComponent {
     }
 
     private suspend fun queryRepository() : GdgResponse {
-        val gdgResponse : GdgResponse
         info(" - cachedGdgResponse: $cachedGdgResponse")
         val apiJob = apiServiceJob
         info(" - apiServiceJob, $apiJob")
-        if (cachedGdgResponse != null) {
-            gdgResponse = cachedGdgResponse!!
-        } else {
+        return cachedGdgResponse ?: suspend {
             info(" - apiJob (apiServiceJob): $apiJob")
             if (apiJob != null && !apiJob.isCompleted) {
                 info(" - apiJob: !isComplete, await()")
-                gdgResponse = apiJob.await()
+                apiJob.await()
             } else {
                 info(" - apiJob: make new request, on $thread}")
-                gdgResponse = performApiQueryAsync().await()
+                performApiQueryAsync().await()
             }
-        }
-        return gdgResponse
+        }()
     }
 
     private fun performApiQueryAsync() =
