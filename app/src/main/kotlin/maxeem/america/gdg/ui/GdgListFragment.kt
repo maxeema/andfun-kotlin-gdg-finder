@@ -13,13 +13,14 @@ import android.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import maxeem.america.app
 import maxeem.america.base.BaseFragment
 import maxeem.america.gdg.R
@@ -27,7 +28,6 @@ import maxeem.america.gdg.databinding.FragmentGdgListBinding
 import maxeem.america.gdg.network.GdgChapter
 import maxeem.america.gdg.viewmodels.GdgListViewModel
 import maxeem.america.util.asString
-import maxeem.america.util.delayed
 import maxeem.america.util.visibleOn
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
@@ -132,11 +132,14 @@ class GdgListFragment : BaseFragment() {
     override fun onStart() { super.onStart()
         if (locationHelper.client != null) {
             locationHelper.listenToUpdates()
-        } else delayed(2_000, stateAtLeast = Lifecycle.State.STARTED) {
-            if (!locationHelper.hasRequestedLastLocationOnStart) {
-                locationHelper.hasRequestedLastLocationOnStart = true
-                if (checkLocationPermission())
-                    locationHelper.requestLastLocation()
+        } else viewOwner?.lifecycleScope?.launch {
+            delay(2_000)
+            viewOwner?.lifecycleScope?.launchWhenStarted {
+                if (!locationHelper.hasRequestedLastLocationOnStart) {
+                    locationHelper.hasRequestedLastLocationOnStart = true
+                    if (checkLocationPermission())
+                        locationHelper.requestLastLocation()
+                }
             }
         }
     }
