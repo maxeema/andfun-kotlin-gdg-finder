@@ -1,4 +1,4 @@
-package maxeem.america.gdg.misc
+package maxeem.america.gdg.ui
 
 import android.view.View
 import androidx.databinding.BindingAdapter
