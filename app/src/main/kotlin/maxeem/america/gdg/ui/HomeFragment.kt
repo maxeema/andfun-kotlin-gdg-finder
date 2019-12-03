@@ -27,9 +27,8 @@ class HomeFragment : BaseFragment() {
         lifecycleOwner = viewLifecycleOwner
         viewModel = model.apply {
             navigateToSearch.observe(viewLifecycleOwner) {
-                if (!it) return@observe
+                it.consume() ?: return@observe
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGdgListFragment())
-                consumeNavigateToSearch()
             }
         }
         toolbar.setOnMenuItemClickListener { when (it.itemId) {

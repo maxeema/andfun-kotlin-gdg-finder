@@ -57,8 +57,8 @@ class AddGdgFragment : BaseFragment() {
         }
 
         model.submitEvent.observe(viewLifecycleOwner) {
-            if (it != true) return@observe
-            model.consumeSubmitEvent()
+            it.consume() ?: return@observe
+            //
             if (sent.get()) {
                 findNavController().navigateUp()
                 return@observe

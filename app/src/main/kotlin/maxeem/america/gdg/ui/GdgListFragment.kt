@@ -102,9 +102,8 @@ class GdgListFragment : BaseFragment() {
             }
         }
         model.applyEvent.observe(viewLifecycleOwner) {
-            if (!it) return@observe
+            it.consume() ?: return@observe
             findNavController().navigate(GdgListFragmentDirections.actionFragmentSearchToFragmentApply())
-            model.consumeApplyEvent()
         }
         model.regionList.observe(viewLifecycleOwner) { regionList ->
             if (regionList.isNullOrEmpty()) return@observe

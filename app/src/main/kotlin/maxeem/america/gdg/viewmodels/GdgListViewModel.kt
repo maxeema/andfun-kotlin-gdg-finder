@@ -10,6 +10,7 @@ import maxeem.america.gdg.network.GdgChapter
 import maxeem.america.gdg.network.LatLong
 import maxeem.america.gdg.repository.GdgData
 import maxeem.america.gdg.repository.GdgRepository
+import maxeem.america.util.Consumable
 import maxeem.america.util.asImmutable
 import maxeem.america.util.asMutable
 import org.jetbrains.anko.AnkoLogger
@@ -45,9 +46,8 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinCo
     val hasData = gdgList.map { !it.isNullOrEmpty() }.apply { asMutable().value = false }
     val hasRegions = regionList.map { !it.isNullOrEmpty() }.apply { asMutable().value = false }
 
-    val applyEvent = MutableLiveData<Boolean>().asImmutable()
-    fun onApply() { applyEvent.asMutable().value = true }
-    fun consumeApplyEvent() { applyEvent.asMutable().value = false }
+    val applyEvent = MutableLiveData<Consumable<Boolean?>>().asImmutable()
+    fun onApply() { applyEvent.asMutable().value = Consumable(true) }
 
     val status = MutableLiveData<ApiStatus?>().asImmutable()
 //    val statusEvent = status.map { it }
