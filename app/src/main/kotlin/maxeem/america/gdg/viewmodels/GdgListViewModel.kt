@@ -50,8 +50,6 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinCo
     fun onApply() { applyEvent.asMutable().value = Consumable(true) }
 
     val status = MutableLiveData<ApiStatus?>().asImmutable()
-//    val statusEvent = status.map { it }
-//    fun consumeStatusEvent() { statusEvent.asMutable().value = null }
 
     init {
         info("init, has regions: ${hasRegions.value}, region: ${region.value}, location: ${location.value}")
