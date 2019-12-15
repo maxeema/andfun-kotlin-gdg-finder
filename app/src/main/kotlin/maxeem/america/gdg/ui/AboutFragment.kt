@@ -10,7 +10,6 @@ import maxeem.america.app
 import maxeem.america.base.BaseFragment
 import maxeem.america.gdg.R
 import maxeem.america.gdg.databinding.FragmentAboutBinding
-import maxeem.america.packageInfo
 import maxeem.america.util.asString
 import maxeem.america.util.hash
 import maxeem.america.util.onClick
@@ -37,7 +36,7 @@ class AboutFragment : BaseFragment(), AnkoLogger {
                     })
                 }
             }
-            version.text = app.packageInfo.versionName//.substringBefore('-')
+            version.text = app.packageManager.getPackageInfo(app.packageName, 0).versionName//.substringBefore('-')
             googlePlay.onClick {
                 Intent(Intent.ACTION_VIEW).apply {
                     data = "https://play.google.com/store/apps/details?id=${app.packageName}".toUri()

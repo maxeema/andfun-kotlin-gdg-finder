@@ -1,7 +1,6 @@
 package maxeem.america
 
 import android.app.Application
-import android.os.Handler
 import maxeem.america.gdg.network.GdgApi
 import maxeem.america.gdg.repository.GdgRepository
 import maxeem.america.gdg.repository.GdgRepositoryImpl
@@ -25,13 +24,13 @@ private val appModule = module {
 class App : Application(), AnkoLogger {
 
     companion object {
-        private lateinit var _instance: App
-        val instance get() = _instance
+        lateinit var instance: App
+            private set
     }
 
     init {
         info("$pid - $hash $timeMillis init")
-        _instance = this
+        instance = this
     }
 
     override fun onCreate() { super.onCreate()
@@ -42,7 +41,3 @@ class App : Application(), AnkoLogger {
     }
 
 }
-
-val App.handler by lazy { Handler(app.mainLooper) }
-val App.packageInfo
-    get() = packageManager.getPackageInfo(packageName, 0)

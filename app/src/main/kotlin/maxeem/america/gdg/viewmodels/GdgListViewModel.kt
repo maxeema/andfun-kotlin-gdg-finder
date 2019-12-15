@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.lifecycle.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import maxeem.america.gdg.misc.ApiStatus
 import maxeem.america.gdg.network.GdgChapter
@@ -57,12 +58,12 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinCo
     }
 
     private fun performJob() {
-        info("performJob(), lastLocation: ${location.value}, currentJob: $job")
+        info("performJob(), lastLocation: ${location.value}, currentJob: $job, viewModelScope: $viewModelScope (isActive: ${viewModelScope.isActive})")
         status.asMutable().value = ApiStatus.Loading
         job?.cancel()
-        job = viewModelScope.launch {
-            this as Job
-            info(" - performJob, launch job: $this")
+        viewModelScope.launch {
+            job = this as Job
+            info(" - performJob, launch, this: $this, job: $job, viewModelScope: $viewModelScope")
             val r : Result<GdgData>
             measureTime {
                 r = runCatching {
@@ -73,7 +74,7 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinCo
                 if (toLongMilliseconds() < MIN_JOB_DURATION)
                     delay(MIN_JOB_DURATION - toLongMilliseconds())
             }
-            info(" - job in the middle, isCancelled: $isCancelled, is same ${job==this}, $this")
+            info(" - job in the middle, isCancelled: $isCancelled, is same ${job===this}, $this")
             if (job != this || isCancelled) return@launch
             r.onSuccess { data ->
                 info(" - performJob, onSuccess, $this")
@@ -82,13 +83,16 @@ class GdgListViewModel(state: SavedStateHandle): ViewModel(), AnkoLogger, KoinCo
                     regionList.asMutable().value = data.regions
                 status.asMutable().value = ApiStatus.Success
             }.onFailure { err ->
-                info(" - performJob, onFailure, canceled: $isCancelled, $this")
-                if (isCancelled) return@onFailure
+//                if (err is CancellationException) return@launch //isCancelled above already handles that
+                info(" - performJob, onFailure, $this")
                 error("  - error is: $err"); err.printStackTrace()
                 status.asMutable().value = ApiStatus.Error.of(err)
             }
         }.apply {
-            invokeOnCompletion { if (job == this) job = null }
+            invokeOnCompletion {
+                info(" - invokeOnCompletion, job: $job")
+                if (job == this) job = null
+            }
         }
     }
 
